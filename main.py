@@ -13,6 +13,10 @@ load_dotenv()  # بارگذاری متغیرهای محیطی
 
 app = FastAPI()
 
+port = int(os.environ.get("PORT", 8080))
+
+app.run(host="0.0.0.0", port=port)
+
 @app.get("/")
 async def read_root():
     return {"message": "App is working securely"}
