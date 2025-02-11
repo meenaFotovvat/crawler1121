@@ -1,0 +1,12 @@
+# نادیده گرفتن دایرکتوری data به همراه فایل‌های داخل آن
+/data/
+
+# اگر می‌خواهید فقط فایل‌های حساس رو نادیده بگیرید:
+data/bookNook_session.session.enc
+data/encryption_key.key
+
+# نادیده گرفتن پوشه __pycache__ و فایل‌های pyc
+__pycache__/
+*.pyc
+
+.env
