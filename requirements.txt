@@ -1,0 +1,5 @@
+telethon
+cryptography
+fastapi
+uvicorn
+python-dotenv
