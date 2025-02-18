@@ -14,6 +14,13 @@ load_dotenv()  # بارگذاری متغیرهای محیطی
 
 app = FastAPI()
 
+@app.get("/debug_env")
+async def debug_env():
+    return {
+        "ENCRYPTED_SESSION": str(len(ENCRYPTED_SESSION_B64)) + " characters",
+        "ENCRYPTION_KEY": str(len(ENCRYPTION_KEY_ENV)) + " characters"
+    }
+
 @app.get("/")
 async def read_root():
     return {"message": "App is working securely"}
@@ -48,7 +55,7 @@ if ENCRYPTED_SESSION_B64:
         encrypted_session = base64.b64decode(ENCRYPTED_SESSION_B64)
         decrypted_compressed_session = cipher.decrypt(encrypted_session)
         decrypted_session = decompress_data(decrypted_compressed_session)
-
+ 
         with open(SESSION_FILE_NAME, "wb") as session_file:
             session_file.write(decrypted_session)
 
