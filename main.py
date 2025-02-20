@@ -14,19 +14,6 @@ load_dotenv()  # بارگذاری متغیرهای محیطی
 
 app = FastAPI()
 
-# نمایش مسیر جاری
-current_path = os.getcwd()
-logging.info(f"📂 مسیر جاری اجرای برنامه: {current_path}")
-
-try:
-    test_file = os.path.join(current_path, "test_write_permission.txt")
-    with open(test_file, "w") as f:
-        f.write("Test write permissions")
-    os.remove(test_file)
-    logging.info("✅ مسیر ذخیره‌سازی قابل نوشتن است.")
-except Exception as e:
-    logging.error(f"❌ مشکل در نوشتن فایل در مسیر جاری: {e}")
-
 @app.get("/")
 async def read_root():
     return {"message": "App is working securely"}
@@ -65,15 +52,11 @@ if ENCRYPTED_SESSION_B64:
         with open(SESSION_FILE_NAME, "wb") as session_file:
             session_file.write(decrypted_session)
 
-        # بررسی وجود فایل session پس از ذخیره
-        session_path = os.path.abspath(SESSION_FILE_NAME)
-        if os.path.exists(session_path):
-            logging.info(f"✅ فایل session در مسیر ذخیره شد: {session_path}")
-        else:
-            logging.error("❌ فایل session پس از ذخیره‌سازی یافت نشد!")
-
+        logging.info("✅ فایل session با موفقیت رمزگشایی و ذخیره شد.")
     except Exception as e:
         logging.error("❌ خطا در رمزگشایی فایل session: " + str(e))
+else:
+    logging.info("⚠️ متغیر ENCRYPTED_SESSION یافت نشد، یک session جدید ساخته خواهد شد.")
 
 # راه‌اندازی کلاینت تلگرام
 client = TelegramClient(SESSION_FILE_NAME, API_ID, API_HASH)
